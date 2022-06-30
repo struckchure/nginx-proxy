@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  mongo:
+    image: 'bitnami/mongodb:latest'
+    env_file:
+      - .env
+    logging:
+      driver: none
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/node/Dockerfile
+    env_file:
+      - .env
+    command: yarn prod
+    volumes:
+      - .:/home/locachampion/code
+      - node_modules:/home/locachampion/code/node_modules
+    depends_on:
+      - mongo
+    expose:
+      - ${API_PORT}
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/nginx/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - api
+    expose:
+      - 80
+      - 443
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=api.locachampion.com
+      - LETSENCRYPT_HOST=api.locachampion.com
+
+volumes:
+  node_modules:
+
+
+networks:
+  default:
+    external:
+      name: webproxy
