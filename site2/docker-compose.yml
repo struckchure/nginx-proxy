@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/node/Dockerfile
+    expose:
+      - 8000
+    command: sh scripts/prod.sh
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/nginx/Dockerfile
+    expose:
+      - 80
+      - 443
+    depends_on:
+      - web
+    environment:
+      - VIRTUAL_HOST=v2.locachampion.com
+      - LETSENCRYPT_HOST=v2.locachampion.com
+
+networks:
+  default:
+    external:
+      name: webproxy
