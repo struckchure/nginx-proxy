@@ -17,8 +17,8 @@ services:
       - .env
     command: yarn prod
     volumes:
-      - .:/home/locachampion/code
-      - node_modules:/home/locachampion/code/node_modules
+      - .:/home/travis/code
+      - node_modules:/home/travis/code/node_modules
     depends_on:
       - mongo
     expose:
@@ -38,8 +38,8 @@ services:
       - 443
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=api.locachampion.com
-      - LETSENCRYPT_HOST=api.locachampion.com
+      - VIRTUAL_HOST=site1.example.com
+      - LETSENCRYPT_HOST=site1.example.com
 
 volumes:
   node_modules:
