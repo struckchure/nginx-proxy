@@ -19,8 +19,8 @@ services:
     depends_on:
       - web
     environment:
-      - VIRTUAL_HOST=v2.locachampion.com
-      - LETSENCRYPT_HOST=v2.locachampion.com
+      - VIRTUAL_HOST=v2.site2.com
+      - LETSENCRYPT_HOST=v2.site2.com
 
 networks:
   default:
