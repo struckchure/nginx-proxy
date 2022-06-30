@@ -21,7 +21,7 @@ services:
     volumes_from:
       - nginx-proxy:rw
     environment:
-      - DEFAULT_EMAIL=ameenmohammed2311@gmail.com
+      - DEFAULT_EMAIL=user@mail.com
 
 
 networks:
