@@ -3,17 +3,17 @@ FROM node:current-slim
 RUN apt-get update && \
     apt install -y sudo
 
-RUN adduser --disabled-password --gecos '' locachampion
-RUN adduser locachampion sudo
+RUN adduser --disabled-password --gecos '' travis
+RUN adduser travis sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-USER locachampion
+USER travis
 
-WORKDIR /home/locachampion/code/
+WORKDIR /home/travis/code/
 
-COPY --chown=locachampion:locachampion package.json package.json
-COPY --chown=locachampion:locachampion . .
+COPY --chown=travis:travis package.json package.json
+COPY --chown=travis:travis . .
 
-RUN sudo chown -R locachampion:locachampion .
+RUN sudo chown -R travis:travis .
 
 RUN yarn
